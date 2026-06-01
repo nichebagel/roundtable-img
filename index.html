@@ -416,7 +416,7 @@
       // newly-visible elements correctly; opacity:0/z-index:-1 elements do not.
       const el = document.createElement('div');
       el.className = 'visual-card ' + (is169 ? 'card-16-9' : 'card-1-1');
-      el.style.cssText = `position:fixed;top:0;left:0;opacity:0;pointer-events:none;`;
+      el.style.cssText = `position:fixed;top:0;left:0;z-index:9999;pointer-events:none;`;
       el.innerHTML = buildCardHTML({...inputs, is169});
       document.body.appendChild(el);
 
