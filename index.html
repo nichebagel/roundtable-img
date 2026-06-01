@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roundtable Visuals — AllSides</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
@@ -257,13 +256,12 @@
       const headingHtml = topicStr
         ? `<span style="font-size:${headFs}px;color:#171717;line-height:1;white-space:nowrap;"><span style="font-weight:500;">Roundtable on </span><span style="font-weight:500;">${escHtml(topicStr)}</span></span>`
         : `<span style="font-size:${headFs}px;font-weight:500;color:#171717;line-height:1;white-space:nowrap;">AllSides Roundtable</span>`;
-      const vDivider = `<span style="display:inline-block;vertical-align:middle;width:1px;height:28px;background:#d4d4d4;margin:0 14px;"></span>`;
       const cardHeader = `
-        <div style="padding:${is169?20:28}px ${pad}px;flex-shrink:0;line-height:0;white-space:nowrap;">
-          <span style="display:inline-block;vertical-align:middle;line-height:0;">${LOGO_SVG_BLACK}</span>
-          ${vDivider}
-          <span style="display:inline-block;vertical-align:middle;line-height:1;">${headingHtml}</span>
-          ${dateStr ? `${vDivider}<span style="display:inline-block;vertical-align:middle;line-height:1;font-size:${headFs}px;font-weight:400;color:#737373;">${escHtml(dateStr)}</span>` : ''}
+        <div style="padding:${is169?20:28}px ${pad}px;display:flex;align-items:center;flex-shrink:0;">
+          ${LOGO_SVG_BLACK}
+          <div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div>
+          ${headingHtml}
+          ${dateStr ? `<div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div><span style="font-size:${headFs}px;font-weight:400;color:#737373;white-space:nowrap;line-height:1;">${escHtml(dateStr)}</span>` : ''}
         </div>
         <div style="height:1px;background:#e5e5e5;flex-shrink:0;"></div>
       `;
@@ -407,37 +405,31 @@
       wrapper.appendChild(clone);
     }
 
-    async function exportPNG(is169, filename) {
+    function exportPNG(is169, filename) {
       const w = is169 ? 1280 : 1080;
       const h = is169 ? 720  : 1080;
-      const inputs = getInputs();
+      const sourceEl = document.getElementById(is169 ? 'card-16-9-el' : 'card-1-1-el');
 
-      // Create a fresh element appended to body — html2canvas renders
-      // newly-visible elements correctly; opacity:0/z-index:-1 elements do not.
-      const el = document.createElement('div');
-      el.className = 'visual-card ' + (is169 ? 'card-16-9' : 'card-1-1');
-      el.style.cssText = `position:fixed;top:0;left:0;z-index:9999;pointer-events:none;`;
-      el.innerHTML = buildCardHTML({...inputs, is169});
-      document.body.appendChild(el);
+      const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">
+        <foreignObject x="0" y="0" width="${w}" height="${h}">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="width:${w}px;height:${h}px;background:#fff;overflow:hidden;box-sizing:border-box;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">${sourceEl.innerHTML}</div>
+        </foreignObject>
+      </svg>`;
 
-      try {
-        const canvas = await html2canvas(el, {
-          scale: 1,
-          useCORS: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          width: w,
-          height: h,
-          windowWidth: w,
-          windowHeight: h,
-        });
+      const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0);
         const a = document.createElement('a');
         a.download = filename;
         a.href = canvas.toDataURL('image/png');
         a.click();
-      } finally {
-        document.body.removeChild(el);
-      }
+      };
+      img.onerror = () => console.error('Export render failed — check console');
+      img.src = url;
     }
 
     window.addEventListener('DOMContentLoaded', update);
