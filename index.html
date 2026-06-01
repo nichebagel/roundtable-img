@@ -257,12 +257,13 @@
       const headingHtml = topicStr
         ? `<span style="font-size:${headFs}px;color:#171717;line-height:1;white-space:nowrap;"><span style="font-weight:500;">Roundtable on </span><span style="font-weight:500;">${escHtml(topicStr)}</span></span>`
         : `<span style="font-size:${headFs}px;font-weight:500;color:#171717;line-height:1;white-space:nowrap;">AllSides Roundtable</span>`;
+      const vDivider = `<span style="display:inline-block;vertical-align:middle;width:1px;height:28px;background:#d4d4d4;margin:0 14px;"></span>`;
       const cardHeader = `
-        <div style="padding:${is169?20:28}px ${pad}px;display:flex;align-items:center;flex-shrink:0;">
-          ${LOGO_SVG_BLACK}
-          <div style="width:1px;height:28px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div>
-          ${headingHtml}
-          ${dateStr ? `<div style="width:1px;height:28px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div><span style="font-size:${headFs}px;font-weight:400;color:#737373;white-space:nowrap;line-height:1;">${escHtml(dateStr)}</span>` : ''}
+        <div style="padding:${is169?20:28}px ${pad}px;flex-shrink:0;line-height:0;white-space:nowrap;">
+          <span style="display:inline-block;vertical-align:middle;line-height:0;">${LOGO_SVG_BLACK}</span>
+          ${vDivider}
+          <span style="display:inline-block;vertical-align:middle;line-height:1;">${headingHtml}</span>
+          ${dateStr ? `${vDivider}<span style="display:inline-block;vertical-align:middle;line-height:1;font-size:${headFs}px;font-weight:400;color:#737373;">${escHtml(dateStr)}</span>` : ''}
         </div>
         <div style="height:1px;background:#e5e5e5;flex-shrink:0;"></div>
       `;
