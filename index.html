@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roundtable Visuals — AllSides</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --color-gold:        #AD974F;
+      --color-teal:        #258156;
+      --color-link:        #097CB5;
+    }
+    body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .visual-card { background: #ffffff; position: relative; overflow: hidden; box-sizing: border-box; }
+    .card-16-9   { width: 1280px; height: 720px;  transform-origin: top left; }
+    .card-1-1    { width: 1080px; height: 1080px; transform-origin: top left; }
+    .preview-wrapper { overflow: hidden; position: relative; }
+    textarea { resize: vertical; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 min-h-screen flex flex-col">
+
+  <a href="#main-content"
+     class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:border-2 focus:border-neutral-900">
+    Skip to main content
+  </a>
+
+  <!-- App header -->
+  <header class="bg-neutral-900 px-4 py-3">
+    <div class="max-w-screen-lg mx-auto flex items-center gap-3">
+      <svg role="img" aria-label="AllSides" style="height:23px;width:auto;display:block;" viewBox="0 0 449 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#hc)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M146.533 89.0381L142.254 74.7301H114.603L110.329 89.0381H95.5149L120.453 15.8311H136.098L161.24 89.0381H146.533ZM128.479 29.0001L118.26 62.6961H138.602L128.479 29.0001Z" fill="#FAFAFA"/>
+          <path d="M164.581 89.0378V15.8318H177.31V89.0388L164.581 89.0378ZM186.178 89.0378V15.8318H198.907V89.0388L186.178 89.0378ZM259.737 83.3358C250.868 90.8018 238.976 90.9028 235.635 90.9028C231.249 90.9028 217.169 90.6958 206.944 80.0158C205.689 78.6678 204.333 76.9038 203.395 75.2458L214.976 67.2628C218.209 72.0328 224.257 78.2518 237.823 78.2518C238.45 78.2518 241.056 78.2518 243.244 77.7348C244.815 77.4248 252.01 75.4588 252.01 68.6108C252.01 67.8868 251.909 65.9148 250.659 64.2568C248.15 60.9368 241.48 59.9988 237.823 59.1728L229.067 57.2018C225.303 56.3758 221.239 55.5438 217.898 53.7798C214.456 52.0158 207.357 47.3478 207.357 36.7748C207.357 35.1168 207.566 30.3478 210.183 25.9878C213.512 20.3928 221.544 13.9658 236.472 13.9658C243.04 13.9658 255.978 14.9998 266.203 28.7918L254.831 37.1848C252.536 33.5608 247.319 26.3028 235.737 26.3028C235.008 26.3028 225.721 26.1958 222.697 31.8988C222.07 33.0438 221.866 34.0788 221.866 35.2188C221.866 36.4598 222.177 37.5048 222.799 38.5388C224.574 41.5438 228.643 42.4768 235.426 43.9318L243.04 45.5888C250.032 47.1448 257.758 49.2188 262.654 54.9208C264.745 57.2008 266.932 60.5158 266.932 67.2628C266.932 73.8978 264.847 78.9818 259.737 83.3358ZM272.882 29.0998V15.8268H285.295V29.0998H272.882ZM272.882 89.0378V37.1848H285.295V89.0378H272.882Z" fill="#FAFAFA"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M329.121 89.0381V84.0561C328.596 84.5781 328.183 85.2011 327.663 85.7181C325.679 87.5881 321.395 90.5951 314.617 90.5951C312.848 90.5951 309.084 90.3871 304.912 88.4151C299.277 85.8251 291.454 79.0781 291.454 64.1511C291.454 48.2861 300.113 40.0951 306.06 37.3991C307.727 36.6741 310.757 35.6351 315.137 35.6351C316.912 35.6351 320.671 35.7351 324.633 37.9151C325.362 38.3311 325.99 38.6451 327.239 39.5781C328.183 40.3031 328.912 41.2361 329.121 41.4431V15.8311H341.534V89.0381H329.121ZM326.719 52.6401C326.092 51.5001 324.944 50.1511 324.006 49.4271C321.926 47.7691 319.62 47.1461 317.014 47.1461C315.974 47.1461 313.261 47.3481 310.655 49.0111C304.703 52.8481 304.494 61.2471 304.494 62.8031C304.494 70.4771 307.727 79.2911 316.912 79.2911C320.253 79.2911 322.858 78.2521 325.046 75.7691C328.279 72.2411 329.121 67.9891 329.014 63.3191C329.014 59.9991 328.494 55.7521 326.719 52.6401ZM395.06 82.8131C392.138 85.5101 385.146 90.5941 374.396 90.5941C371.061 90.5941 362.814 90.1781 355.726 83.6501C349.779 78.0441 347.586 70.8871 347.586 62.8021C347.586 58.4481 348.214 54.3021 349.881 50.3591C352.176 45.1731 358.648 35.6341 373.774 35.6341C385.457 35.6341 391.618 41.6451 394.331 45.5891C396.722 49.2191 399.125 55.5441 399.436 65.6051H360.836C361.045 67.1561 361.565 70.3701 364.181 73.4871C365.945 75.6621 369.082 78.4601 375.548 78.4601C382.02 78.4601 385.774 75.4601 387.441 73.6851C387.859 73.2791 388.487 72.4481 389.216 71.3081L399.859 77.4261C399.023 78.5611 397.564 80.5321 395.06 82.8131ZM384.626 52.2231C383.473 49.7351 380.76 45.5891 373.983 45.5891C371.27 45.5891 369.806 46.1061 368.766 46.5221C362.927 48.9091 361.565 54.7121 361.254 56.4771H385.666C385.463 54.8191 385.114 53.4011 384.626 52.2231Z" fill="#FAFAFA"/>
+          <path d="M447.225 79.9138C444.721 84.6838 438.255 90.5938 425.52 90.5938C415.719 90.5938 408.727 87.2738 405.494 85.3018C403.719 84.1668 402.051 82.8128 400.48 81.2568L409.869 73.6838C410.287 74.2118 410.915 75.1388 412.271 76.2848C416.759 80.1168 423.44 80.3248 424.898 80.3248C428.024 79.5998 431.681 79.5998 433.761 77.2178C434.603 76.3858 435.118 75.2458 435.118 74.2118C435.118 73.7918 435.016 72.9698 434.287 72.0318C432.93 70.1618 431.263 70.0608 427.402 69.2288C423.96 68.5038 420.512 68.0888 417.183 67.2628C414.882 66.6388 402.781 63.7348 402.781 52.5378C402.781 48.5948 404.448 45.6958 405.177 44.5498C407.789 40.5098 413.944 35.6338 425.209 35.6338C429.274 35.6338 439.82 36.2568 447.643 45.2798L438.775 53.4698C437.729 51.2908 436.378 50.0438 435.542 49.3198C432.303 46.5218 428.866 45.5888 424.587 45.5888C424.067 45.5888 420.512 45.5888 418.223 47.1448C416.341 48.3918 415.928 50.0448 415.928 50.9768C416.024 52.7408 417.279 53.9868 417.595 54.1958C418.952 55.2348 422.4 56.0608 426.566 56.7858C429.386 57.3078 432.201 57.7178 435.016 58.3418C437.836 58.9648 440.962 59.8978 443.268 61.5608C445.139 62.9088 449 66.5328 449 72.8588C449 75.3528 448.373 77.7348 447.225 79.9138Z" fill="#FAFAFA"/>
+          <path d="M40.2389 42.4981L18.1319 17.6801C15.5259 14.7601 12.3729 15.3781 11.1239 19.0601L0.51289 50.3161C-0.73711 53.9931 0.378891 59.4021 2.97889 62.3281L8.05689 68.0301L18.6469 96.8081C19.4189 98.9021 20.2339 98.7961 20.4639 96.5891L21.8369 83.4951L25.0809 87.1451C27.6909 90.0661 30.8449 89.4431 32.0889 85.7651L42.6939 54.5101C43.9489 50.8281 42.8449 45.4181 40.2389 42.4981Z" fill="#DD2A19"/>
+          <path d="M90.2886 41.6447L57.7906 48.3277C53.9676 49.1107 49.8066 52.7717 48.5576 56.4547L37.9516 87.7047C36.6966 91.3927 38.8146 93.7587 42.6376 92.9747L54.8036 90.4647L73.2806 103.208C74.3476 103.943 75.1736 103.49 75.1146 102.201L74.3696 86.4467L75.1356 86.2927C78.9646 85.4987 83.1196 81.8477 84.3746 78.1597L94.9806 46.9147C96.2296 43.2277 94.1226 40.8557 90.2886 41.6447Z" fill="#2062A6"/>
+          <path d="M91.2834 28.8871L86.4044 23.4141L88.0884 5.9181C88.2164 4.6281 87.3374 3.9891 86.1414 4.5011L74.0934 9.5951L69.1764 4.0751C66.5664 1.1481 61.3004 -0.599902 57.4714 0.188098L24.9734 6.8671C21.1504 7.6561 20.1434 10.6871 22.7534 13.6191L44.8554 38.4321C47.4554 41.3521 52.7324 43.1051 56.5554 42.3171L89.0474 35.6341C92.8814 34.8501 93.8784 31.8131 91.2834 28.8871Z" fill="#8C63A6"/>
+        </g>
+        <defs><clipPath id="hc"><rect width="449" height="104" fill="white"/></clipPath></defs>
+      </svg>
+      <span style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:300;font-size:22px;color:#f5f5f5;line-height:1;letter-spacing:0.01em;">Labs</span>
+    </div>
+  </header>
+
+  <main id="main-content" class="flex-1 max-w-screen-lg w-full mx-auto px-4 md:px-6 py-10 border-l border-r border-neutral-300">
+
+    <div class="mb-8 max-w-[680px]">
+      <h1 class="text-3xl font-medium text-neutral-900 text-balance mb-2">Roundtable Visual Generator</h1>
+      <p class="text-base text-neutral-700">Generate shareable graphics summarizing AllSides Roundtable event results. Fill in the data below, then export as PNG.</p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+
+      <!-- Input Panel -->
+      <div class="w-full lg:w-72 flex-shrink-0">
+        <div class="bg-white border border-neutral-200 p-5 flex flex-col gap-5">
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-2" for="input-topic">Event Topic <span class="text-neutral-400 normal-case tracking-normal font-normal">(optional)</span></label>
+            <input id="input-topic" type="text" placeholder="e.g. Immigration Policy"
+              class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+              oninput="update()">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-2" for="input-date">Event Date <span class="text-neutral-400 normal-case tracking-normal font-normal">(optional)</span></label>
+            <input id="input-date" type="text" placeholder="e.g. May 28, 2026"
+              class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+              oninput="update()">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-2" for="input-participants">Number of Participants</label>
+            <input id="input-participants" type="number" min="1" max="500" value="24"
+              class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+              oninput="update()">
+          </div>
+
+          <div class="border-t border-neutral-200 pt-5">
+            <p class="text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-3">Quotes <span class="text-neutral-400 normal-case tracking-normal font-normal">(one per box)</span></p>
+            <div class="flex flex-col gap-3">
+              <label class="sr-only" for="q1">Quote 1</label>
+              <textarea id="q1" rows="3" placeholder="Quote 1…"
+                class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+                oninput="update()"></textarea>
+              <label class="sr-only" for="q2">Quote 2</label>
+              <textarea id="q2" rows="3" placeholder="Quote 2…"
+                class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+                oninput="update()"></textarea>
+              <label class="sr-only" for="q3">Quote 3</label>
+              <textarea id="q3" rows="3" placeholder="Quote 3…"
+                class="w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+                oninput="update()"></textarea>
+            </div>
+          </div>
+
+          <div class="border-t border-neutral-200 pt-5">
+            <label class="block text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-1" for="sentiment-input">Sentiment Score</label>
+            <p class="text-xs text-neutral-400 mb-3">0 = Very Negative &nbsp;·&nbsp; 100 = Very Positive</p>
+            <input id="sentiment-input" type="range" min="0" max="100" value="65"
+              class="w-full accent-neutral-900 cursor-pointer focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900"
+              oninput="update()">
+            <div class="flex justify-between text-xs text-neutral-500 mt-1">
+              <span>Negative</span>
+              <span id="sentiment-label" class="font-medium text-neutral-700">65 — Mostly Positive</span>
+              <span>Positive</span>
+            </div>
+          </div>
+
+          <div class="border-t border-neutral-200 pt-5 flex flex-col gap-3">
+            <button onclick="exportPNG('card-16-9-el', 'roundtable-16x9.png')"
+              class="w-full bg-neutral-900 text-white px-4 py-2 text-sm font-medium rounded hover:bg-neutral-700 transition-colors duration-150 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900">
+              <i class="fa-light fa-download mr-2" aria-hidden="true"></i>Export 16:9 PNG
+            </button>
+            <button onclick="exportPNG('card-1-1-el', 'roundtable-1x1.png')"
+              class="w-full bg-white text-neutral-900 border border-neutral-300 px-4 py-2 text-sm font-medium rounded hover:bg-neutral-100 transition-colors duration-150 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900">
+              <i class="fa-light fa-download mr-2" aria-hidden="true"></i>Export 1:1 PNG
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Preview Panel -->
+      <div class="flex-1 flex flex-col gap-8 min-w-0">
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-neutral-500 border-b border-neutral-200 pb-2 mb-3">16:9 Preview</p>
+          <div id="preview-16-9" class="preview-wrapper w-full border border-neutral-200 shadow-sm"></div>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-neutral-500 border-b border-neutral-200 pb-2 mb-3">1:1 Preview</p>
+          <div id="preview-1-1" class="preview-wrapper border border-neutral-200 shadow-sm" style="max-width:480px;"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hidden full-res render targets -->
+    <div style="position:fixed;left:-9999px;top:-9999px;pointer-events:none;" aria-hidden="true">
+      <div id="card-16-9-el" class="visual-card card-16-9"></div>
+      <div id="card-1-1-el"  class="visual-card card-1-1"></div>
+    </div>
+
+  </main>
+
+  <script>
+    // ---- Sentiment helpers ----
+    function sentimentLabel(score) {
+      if (score >= 80) return 'Very Positive';
+      if (score >= 60) return 'Mostly Positive';
+      if (score >= 40) return 'Mixed';
+      if (score >= 20) return 'Mostly Negative';
+      return 'Very Negative';
+    }
+
+    // ---- Adaptive quote font size ----
+    // Estimates the largest font size (px) that fits all quotes in the available space.
+    // Uses a simple character-count heuristic for italic Helvetica Neue.
+    function calcQuoteFontSize(filteredQuotes, availW, availH, marginBetween, maxFs, minFs) {
+      if (!filteredQuotes.length) return maxFs;
+      for (let fs = maxFs; fs >= minFs; fs--) {
+        const lineH     = fs * 1.6;
+        const charWidth = fs * 0.53; // italic Helvetica avg char width ratio
+        let totalH = 0;
+        for (const q of filteredQuotes) {
+          const chars  = q.length + 4; // +4 for curly quotes
+          const lines  = Math.ceil((chars * charWidth) / availW);
+          totalH += lines * lineH + marginBetween;
+        }
+        totalH -= marginBetween; // no trailing margin on last quote
+        if (totalH <= availH) return fs;
+      }
+      return minFs;
+    }
+
+    // ---- Dot grid — bias color gradient across columns ----
+    // Left → Center → Right: #2E64A0 → #9766A0 → #CA2127
+    function biasGradientColor(t) {
+      const L = [46, 100, 160], C = [151, 102, 160], R = [202, 33, 39];
+      const [a, b, u] = t <= 0.5 ? [L, C, t * 2] : [C, R, (t - 0.5) * 2];
+      return `rgb(${Math.round(a[0]+(b[0]-a[0])*u)},${Math.round(a[1]+(b[1]-a[1])*u)},${Math.round(a[2]+(b[2]-a[2])*u)})`;
+    }
+
+    function buildDots(count, dotPx, gapPx) {
+      const n = Math.min(count, 500);
+      const dots = Array.from({length: n}, (_, i) => {
+        const t = n > 1 ? i / (n - 1) : 0.5;
+        return `<div style="width:${dotPx}px;height:${dotPx}px;border-radius:50%;background:${biasGradientColor(t)};flex-shrink:0;"></div>`;
+      }).join('');
+      return `<div style="display:flex;flex-wrap:wrap;gap:${gapPx}px;line-height:0;">${dots}</div>`;
+    }
+
+    // ---- AllSides logo SVG (black letterforms for white bg) ----
+    const LOGO_SVG_BLACK = `<svg style="height:28px;width:auto;display:block;" viewBox="0 0 449 104" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#lk)"><path fill-rule="evenodd" clip-rule="evenodd" d="M146.533 89.0381L142.254 74.7301H114.603L110.329 89.0381H95.5149L120.453 15.8311H136.098L161.24 89.0381H146.533ZM128.479 29.0001L118.26 62.6961H138.602L128.479 29.0001Z" fill="#171717"/><path d="M164.581 89.0378V15.8318H177.31V89.0388L164.581 89.0378ZM186.178 89.0378V15.8318H198.907V89.0388L186.178 89.0378ZM259.737 83.3358C250.868 90.8018 238.976 90.9028 235.635 90.9028C231.249 90.9028 217.169 90.6958 206.944 80.0158C205.689 78.6678 204.333 76.9038 203.395 75.2458L214.976 67.2628C218.209 72.0328 224.257 78.2518 237.823 78.2518C238.45 78.2518 241.056 78.2518 243.244 77.7348C244.815 77.4248 252.01 75.4588 252.01 68.6108C252.01 67.8868 251.909 65.9148 250.659 64.2568C248.15 60.9368 241.48 59.9988 237.823 59.1728L229.067 57.2018C225.303 56.3758 221.239 55.5438 217.898 53.7798C214.456 52.0158 207.357 47.3478 207.357 36.7748C207.357 35.1168 207.566 30.3478 210.183 25.9878C213.512 20.3928 221.544 13.9658 236.472 13.9658C243.04 13.9658 255.978 14.9998 266.203 28.7918L254.831 37.1848C252.536 33.5608 247.319 26.3028 235.737 26.3028C235.008 26.3028 225.721 26.1958 222.697 31.8988C222.07 33.0438 221.866 34.0788 221.866 35.2188C221.866 36.4598 222.177 37.5048 222.799 38.5388C224.574 41.5438 228.643 42.4768 235.426 43.9318L243.04 45.5888C250.032 47.1448 257.758 49.2188 262.654 54.9208C264.745 57.2008 266.932 60.5158 266.932 67.2628C266.932 73.8978 264.847 78.9818 259.737 83.3358ZM272.882 29.0998V15.8268H285.295V29.0998H272.882ZM272.882 89.0378V37.1848H285.295V89.0378H272.882Z" fill="#171717"/><path fill-rule="evenodd" clip-rule="evenodd" d="M329.121 89.0381V84.0561C328.596 84.5781 328.183 85.2011 327.663 85.7181C325.679 87.5881 321.395 90.5951 314.617 90.5951C312.848 90.5951 309.084 90.3871 304.912 88.4151C299.277 85.8251 291.454 79.0781 291.454 64.1511C291.454 48.2861 300.113 40.0951 306.06 37.3991C307.727 36.6741 310.757 35.6351 315.137 35.6351C316.912 35.6351 320.671 35.7351 324.633 37.9151C325.362 38.3311 325.99 38.6451 327.239 39.5781C328.183 40.3031 328.912 41.2361 329.121 41.4431V15.8311H341.534V89.0381H329.121ZM326.719 52.6401C326.092 51.5001 324.944 50.1511 324.006 49.4271C321.926 47.7691 319.62 47.1461 317.014 47.1461C315.974 47.1461 313.261 47.3481 310.655 49.0111C304.703 52.8481 304.494 61.2471 304.494 62.8031C304.494 70.4771 307.727 79.2911 316.912 79.2911C320.253 79.2911 322.858 78.2521 325.046 75.7691C328.279 72.2411 329.121 67.9891 329.014 63.3191C329.014 59.9991 328.494 55.7521 326.719 52.6401ZM395.06 82.8131C392.138 85.5101 385.146 90.5941 374.396 90.5941C371.061 90.5941 362.814 90.1781 355.726 83.6501C349.779 78.0441 347.586 70.8871 347.586 62.8021C347.586 58.4481 348.214 54.3021 349.881 50.3591C352.176 45.1731 358.648 35.6341 373.774 35.6341C385.457 35.6341 391.618 41.6451 394.331 45.5891C396.722 49.2191 399.125 55.5441 399.436 65.6051H360.836C361.045 67.1561 361.565 70.3701 364.181 73.4871C365.945 75.6621 369.082 78.4601 375.548 78.4601C382.02 78.4601 385.774 75.4601 387.441 73.6851C387.859 73.2791 388.487 72.4481 389.216 71.3081L399.859 77.4261C399.023 78.5611 397.564 80.5321 395.06 82.8131ZM384.626 52.2231C383.473 49.7351 380.76 45.5891 373.983 45.5891C371.27 45.5891 369.806 46.1061 368.766 46.5221C362.927 48.9091 361.565 54.7121 361.254 56.4771H385.666C385.463 54.8191 385.114 53.4011 384.626 52.2231Z" fill="#171717"/><path d="M447.225 79.9138C444.721 84.6838 438.255 90.5938 425.52 90.5938C415.719 90.5938 408.727 87.2738 405.494 85.3018C403.719 84.1668 402.051 82.8128 400.48 81.2568L409.869 73.6838C410.287 74.2118 410.915 75.1388 412.271 76.2848C416.759 80.1168 423.44 80.3248 424.898 80.3248C428.024 79.5998 431.681 79.5998 433.761 77.2178C434.603 76.3858 435.118 75.2458 435.118 74.2118C435.118 73.7918 435.016 72.9698 434.287 72.0318C432.93 70.1618 431.263 70.0608 427.402 69.2288C423.96 68.5038 420.512 68.0888 417.183 67.2628C414.882 66.6388 402.781 63.7348 402.781 52.5378C402.781 48.5948 404.448 45.6958 405.177 44.5498C407.789 40.5098 413.944 35.6338 425.209 35.6338C429.274 35.6338 439.82 36.2568 447.643 45.2798L438.775 53.4698C437.729 51.2908 436.378 50.0438 435.542 49.3198C432.303 46.5218 428.866 45.5888 424.587 45.5888C424.067 45.5888 420.512 45.5888 418.223 47.1448C416.341 48.3918 415.928 50.0448 415.928 50.9768C416.024 52.7408 417.279 53.9868 417.595 54.1958C418.952 55.2348 422.4 56.0608 426.566 56.7858C429.386 57.3078 432.201 57.7178 435.016 58.3418C437.836 58.9648 440.962 59.8978 443.268 61.5608C445.139 62.9088 449 66.5328 449 72.8588C449 75.3528 448.373 77.7348 447.225 79.9138Z" fill="#171717"/><path d="M40.2389 42.4981L18.1319 17.6801C15.5259 14.7601 12.3729 15.3781 11.1239 19.0601L0.51289 50.3161C-0.73711 53.9931 0.378891 59.4021 2.97889 62.3281L8.05689 68.0301L18.6469 96.8081C19.4189 98.9021 20.2339 98.7961 20.4639 96.5891L21.8369 83.4951L25.0809 87.1451C27.6909 90.0661 30.8449 89.4431 32.0889 85.7651L42.6939 54.5101C43.9489 50.8281 42.8449 45.4181 40.2389 42.4981Z" fill="#DD2A19"/><path d="M90.2886 41.6447L57.7906 48.3277C53.9676 49.1107 49.8066 52.7717 48.5576 56.4547L37.9516 87.7047C36.6966 91.3927 38.8146 93.7587 42.6376 92.9747L54.8036 90.4647L73.2806 103.208C74.3476 103.943 75.1736 103.49 75.1146 102.201L74.3696 86.4467L75.1356 86.2927C78.9646 85.4987 83.1196 81.8477 84.3746 78.1597L94.9806 46.9147C96.2296 43.2277 94.1226 40.8557 90.2886 41.6447Z" fill="#2062A6"/><path d="M91.2834 28.8871L86.4044 23.4141L88.0884 5.9181C88.2164 4.6281 87.3374 3.9891 86.1414 4.5011L74.0934 9.5951L69.1764 4.0751C66.5664 1.1481 61.3004 -0.599902 57.4714 0.188098L24.9734 6.8671C21.1504 7.6561 20.1434 10.6871 22.7534 13.6191L44.8554 38.4321C47.4554 41.3521 52.7324 43.1051 56.5554 42.3171L89.0474 35.6341C92.8814 34.8501 93.8784 31.8131 91.2834 28.8871Z" fill="#8C63A6"/></g><defs><clipPath id="lk"><rect width="449" height="104" fill="white"/></clipPath></defs></svg>`;
+
+    // Sentiment gradient: orange (negative) → green (positive)
+    const SENT_GRADIENT = 'linear-gradient(90deg, #C96A1B, #AD974F, #258156)';
+
+    // ---- Build card HTML ----
+    function buildCardHTML(opts) {
+      const { is169, count, quotes, sentiment, topic, date } = opts;
+      const score = parseInt(sentiment);
+      const sLabel = sentimentLabel(score);
+
+      const topicStr = topic.trim();
+      const dateStr  = date.trim();
+
+      // Dot sizing
+      const dotPx  = is169
+        ? (count > 200 ? 7 : count > 100 ? 9 : count > 50 ? 11 : 14)
+        : (count > 200 ? 9 : count > 100 ? 11 : count > 50 ? 14 : 17);
+      const dotGap = Math.max(3, Math.round(dotPx * 0.4));
+
+      // Font sizes — native canvas px
+      const labelFs  = is169 ? 15  : 19;   // section labels (PARTICIPANTS etc.)
+      const bigNumFs = is169 ? 56  : 68;
+      const metaFs   = is169 ? 16  : 20;   // sentiment "Mostly Positive", axis labels
+      const headFs   = is169 ? 24  : 28;
+      const pad      = is169 ? 35  : 43;
+
+      const dotsHTML = buildDots(count, dotPx, dotGap);
+
+      const filteredQuotes = quotes.filter(q => q.trim());
+
+      // Adaptive quote font size — fit all quotes in the available space
+      let qFs;
+      if (is169) {
+        // Quotes column: width = 1280 - 310(leftCol) - pad - round(pad*0.8) - 18(quote indent)
+        // Height = 720 - 62(header) - 32(footer) - 32(topPad) - 32(botPad) - (labelFs+22)
+        const qW = 1280 - 310 - pad - Math.round(pad * 0.8) - 18;
+        const qH = 720 - 62 - 32 - 32 - 32 - (labelFs + 22);
+        qFs = calcQuoteFontSize(filteredQuotes, qW, qH, 20, 32, 14);
+      } else {
+        // Quotes section: width = 1080 - pad*2 - 24(indent), height conservative estimate
+        const qW = 1080 - pad * 2 - 24;
+        const qH = 480; // 1080 minus header, footer, stats row, margins, label
+        qFs = calcQuoteFontSize(filteredQuotes, qW, qH, 28, 44, 18);
+      }
+
+      const quoteBlocks = filteredQuotes.map(q => `
+        <div style="border-left:3px solid #e5e5e5;padding-left:${is169?18:24}px;margin-bottom:${is169?20:28}px;">
+          <p style="font-size:${qFs}px;color:#404040;line-height:1.55;font-style:normal;margin:0;">&ldquo;${boldFirstWords(q, 5)}&rdquo;</p>
+        </div>`
+      ).join('');
+
+      // Shared card header (white bg)
+      const headingHtml = topicStr
+        ? `<span style="font-size:${headFs}px;color:#171717;line-height:1;white-space:nowrap;"><span style="font-weight:500;">Roundtable on </span><span style="font-weight:500;">${escHtml(topicStr)}</span></span>`
+        : `<span style="font-size:${headFs}px;font-weight:500;color:#171717;line-height:1;white-space:nowrap;">AllSides Roundtable</span>`;
+      const cardHeader = `
+        <div style="padding:${is169?20:28}px ${pad}px;display:flex;align-items:center;flex-shrink:0;">
+          ${LOGO_SVG_BLACK}
+          <div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div>
+          ${headingHtml}
+          ${dateStr ? `<div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div><span style="font-size:${headFs}px;font-weight:400;color:#737373;white-space:nowrap;line-height:1;">${escHtml(dateStr)}</span>` : ''}
+        </div>
+        <div style="height:1px;background:#e5e5e5;flex-shrink:0;margin:0 ${pad}px;"></div>
+      `;
+
+      // Sentiment bar block (reusable)
+      const sentBar = (compact) => `
+        <div>
+          <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:${compact?10:14}px;">Sentiment</div>
+          <div style="font-size:${compact ? Math.round(bigNumFs*0.75) : bigNumFs}px;font-weight:500;color:#171717;line-height:1;margin-bottom:8px;">${score}</div>
+          <div style="font-size:${metaFs}px;color:#737373;margin-bottom:${compact?16:20}px;">${sLabel}</div>
+          <div style="position:relative;height:${is169?8:10}px;border-radius:5px;background:${SENT_GRADIENT};margin-bottom:7px;">
+            <div style="position:absolute;top:50%;left:${score}%;transform:translate(-50%,-50%);width:${is169?16:20}px;height:${is169?16:20}px;border-radius:50%;background:#171717;border:2.5px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,0.3);"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:${labelFs}px;color:#a1a1a1;">
+            <span>Negative</span><span>Positive</span>
+          </div>
+        </div>`;
+
+      if (is169) {
+        return `
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#fff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;box-sizing:border-box;">
+            ${cardHeader}
+
+            <div style="flex:1;display:flex;overflow:hidden;">
+
+              <!-- Left col: Participants + Sentiment -->
+              <div style="width:310px;flex-shrink:0;padding:32px ${Math.round(pad*0.7)}px 32px ${pad}px;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;gap:28px;overflow:hidden;">
+                <div>
+                  <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:12px;">Participants</div>
+                  <div style="font-size:${bigNumFs}px;font-weight:500;color:#171717;line-height:1.1;margin-bottom:20px;">${count}</div>
+                  <div style="overflow:hidden;max-height:130px;">${dotsHTML}</div>
+                </div>
+                <div style="border-top:1px solid #f0f0f0;padding-top:24px;">
+                  ${sentBar(true)}
+                </div>
+              </div>
+
+              <!-- Right: Quotes — top-aligned to match left column -->
+              <div style="flex:1;padding:32px ${pad}px 32px ${Math.round(pad*0.8)}px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;">
+                <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:22px;">What They Said</div>
+                ${quoteBlocks || `<p style="font-size:${qFs}px;color:#a1a1a1;font-style:italic;margin:0;">No quotes entered.</p>`}
+              </div>
+
+            </div>
+
+            <!-- Footnote -->
+            <div style="padding:10px ${pad}px;border-top:1px solid #e5e5e5;flex-shrink:0;">
+              <span style="font-size:12px;color:#a1a1a1;">Results from AllSides Roundtable event${dateStr ? ' on ' + escHtml(dateStr) : ''}. See more at allsides.com/dialogue</span>
+            </div>
+          </div>`;
+      } else {
+        return `
+          <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#fff;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;box-sizing:border-box;">
+            ${cardHeader}
+
+            <div style="flex:1;display:flex;flex-direction:column;padding:${Math.round(pad*0.75)}px ${pad}px ${pad}px;overflow:hidden;">
+
+              <!-- Stats row: Participants | Sentiment -->
+              <div style="display:flex;gap:0;margin-bottom:40px;">
+                <div style="flex:1;padding-right:40px;">
+                  <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:12px;">Participants</div>
+                  <div style="font-size:${bigNumFs}px;font-weight:500;color:#171717;line-height:1.1;margin-bottom:20px;">${count}</div>
+                  <div style="overflow:hidden;max-height:130px;">${dotsHTML}</div>
+                </div>
+                <div style="width:1px;background:#e5e5e5;flex-shrink:0;"></div>
+                <div style="flex:1;padding-left:40px;">
+                  ${sentBar(false)}
+                </div>
+              </div>
+
+              <div style="height:1px;background:#e5e5e5;margin-bottom:36px;flex-shrink:0;"></div>
+
+              <!-- Quotes -->
+              <div style="flex:1;overflow:hidden;">
+                <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:24px;">What They Said</div>
+                ${quoteBlocks || `<p style="font-size:${qFs}px;color:#a1a1a1;font-style:italic;margin:0;">No quotes entered.</p>`}
+              </div>
+
+            </div>
+
+            <!-- Footnote -->
+            <div style="padding:14px ${pad}px;border-top:1px solid #e5e5e5;flex-shrink:0;">
+              <span style="font-size:15px;color:#a1a1a1;">Results from AllSides Roundtable event${dateStr ? ' on ' + escHtml(dateStr) : ''}. See more at allsides.com/dialogue</span>
+            </div>
+          </div>`;
+      }
+    }
+
+    function boldFirstWords(text, n) {
+      const words = text.trim().split(/\s+/);
+      const boldPart = words.slice(0, n).map(escHtml).join(' ');
+      const rest     = words.slice(n).map(escHtml).join(' ');
+      return rest
+        ? `<strong style="font-weight:700;">${boldPart}</strong> ${rest}`
+        : `<strong style="font-weight:700;">${boldPart}</strong>`;
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function getInputs() {
+      return {
+        topic:     document.getElementById('input-topic').value,
+        date:      document.getElementById('input-date').value,
+        count:     Math.max(1, Math.min(500, parseInt(document.getElementById('input-participants').value) || 1)),
+        quotes:    ['q1','q2','q3'].map(id => document.getElementById(id).value),
+        sentiment: document.getElementById('sentiment-input').value,
+      };
+    }
+
+    function update() {
+      const inputs = getInputs();
+      const score = parseInt(inputs.sentiment);
+      document.getElementById('sentiment-label').textContent = `${score} — ${sentimentLabel(score)}`;
+
+      const el169 = document.getElementById('card-16-9-el');
+      const el11  = document.getElementById('card-1-1-el');
+      el169.innerHTML = buildCardHTML({...inputs, is169: true});
+      el11.innerHTML  = buildCardHTML({...inputs, is169: false});
+
+      scalePreview('preview-16-9', el169, 1280, 720);
+      scalePreview('preview-1-1',  el11,  1080, 1080);
+    }
+
+    function scalePreview(wrapperId, cardEl, nW, nH) {
+      const wrapper = document.getElementById(wrapperId);
+      const avail   = wrapper.clientWidth || 600;
+      const scale   = avail / nW;
+      wrapper.style.height   = (nH * scale) + 'px';
+      wrapper.style.position = 'relative';
+      wrapper.style.overflow = 'hidden';
+      wrapper.innerHTML      = '';
+      const clone = cardEl.cloneNode(true);
+      clone.removeAttribute('id');
+      clone.style.position       = 'absolute';
+      clone.style.top            = '0';
+      clone.style.left           = '0';
+      clone.style.transformOrigin = 'top left';
+      clone.style.transform      = `scale(${scale})`;
+      wrapper.appendChild(clone);
+    }
+
+    async function exportPNG(elId, filename) {
+      const el = document.getElementById(elId);
+      el.style.transform = '';
+      try {
+        const canvas = await html2canvas(el, {
+          scale: 1,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+        });
+        const a = document.createElement('a');
+        a.download = filename;
+        a.href = canvas.toDataURL('image/png');
+        a.click();
+      } finally {
+        el.style.transform = '';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', update);
+    window.addEventListener('resize', update);
+  </script>
+
+</body>
+</html>
