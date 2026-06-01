@@ -260,9 +260,9 @@
       const cardHeader = `
         <div style="padding:${is169?20:28}px ${pad}px;display:flex;align-items:center;flex-shrink:0;">
           ${LOGO_SVG_BLACK}
-          <div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div>
+          <div style="width:1px;height:28px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div>
           ${headingHtml}
-          ${dateStr ? `<div style="width:1px;height:22px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div><span style="font-size:${headFs}px;font-weight:400;color:#737373;white-space:nowrap;line-height:1;">${escHtml(dateStr)}</span>` : ''}
+          ${dateStr ? `<div style="width:1px;height:28px;background:#d4d4d4;flex-shrink:0;margin:0 14px;"></div><span style="font-size:${headFs}px;font-weight:400;color:#737373;white-space:nowrap;line-height:1;">${escHtml(dateStr)}</span>` : ''}
         </div>
         <div style="height:1px;background:#e5e5e5;flex-shrink:0;"></div>
       `;
@@ -289,8 +289,8 @@
             <div style="flex:1;display:flex;overflow:hidden;">
 
               <!-- Left col: Participants + Sentiment -->
-              <div style="width:310px;flex-shrink:0;padding:32px ${Math.round(pad*0.7)}px 32px ${pad}px;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;gap:28px;overflow:hidden;">
-                <div>
+              <div style="width:310px;flex-shrink:0;padding:32px ${Math.round(pad*0.7)}px 32px ${pad}px;border-right:1px solid #e5e5e5;display:flex;flex-direction:column;overflow:hidden;">
+                <div style="margin-bottom:28px;">
                   <div style="font-size:${labelFs}px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:#737373;margin-bottom:12px;">Participants</div>
                   <div style="font-size:${bigNumFs}px;font-weight:500;color:#171717;line-height:1.1;margin-bottom:28px;">${count}</div>
                   <div style="overflow:hidden;max-height:130px;">${dotsHTML}</div>
