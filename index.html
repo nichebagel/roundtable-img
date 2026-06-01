@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roundtable Visuals — AllSides</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/dom-to-image-more@3.4.0/dist/dom-to-image-more.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
@@ -116,11 +116,11 @@
           </div>
 
           <div class="border-t border-neutral-200 pt-5 flex flex-col gap-3">
-            <button onclick="exportPNG('card-16-9-el', 'roundtable-16x9.png')"
+            <button onclick="exportPNG(true, 'roundtable-16x9.png')"
               class="w-full bg-neutral-900 text-white px-4 py-2 text-sm font-medium rounded hover:bg-neutral-700 transition-colors duration-150 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900">
               <i class="fa-light fa-download mr-2" aria-hidden="true"></i>Export 16:9 PNG
             </button>
-            <button onclick="exportPNG('card-1-1-el', 'roundtable-1x1.png')"
+            <button onclick="exportPNG(false, 'roundtable-1x1.png')"
               class="w-full bg-white text-neutral-900 border border-neutral-300 px-4 py-2 text-sm font-medium rounded hover:bg-neutral-100 transition-colors duration-150 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-neutral-900">
               <i class="fa-light fa-download mr-2" aria-hidden="true"></i>Export 1:1 PNG
             </button>
@@ -407,22 +407,36 @@
       wrapper.appendChild(clone);
     }
 
-    async function exportPNG(elId, filename) {
-      const el = document.getElementById(elId);
-      el.style.transform = '';
+    async function exportPNG(is169, filename) {
+      const w = is169 ? 1280 : 1080;
+      const h = is169 ? 720  : 1080;
+      const inputs = getInputs();
+
+      // Create a fresh element appended to body — html2canvas renders
+      // newly-visible elements correctly; opacity:0/z-index:-1 elements do not.
+      const el = document.createElement('div');
+      el.className = 'visual-card ' + (is169 ? 'card-16-9' : 'card-1-1');
+      el.style.cssText = `position:fixed;top:0;left:0;visibility:hidden;`;
+      el.innerHTML = buildCardHTML({...inputs, is169});
+      document.body.appendChild(el);
+
       try {
-        const dataUrl = await domtoimage.toPng(el, {
-          width: el.offsetWidth,
-          height: el.offsetHeight,
-          bgcolor: '#ffffff',
-          style: { transform: 'none' },
+        const canvas = await html2canvas(el, {
+          scale: 1,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: w,
+          height: h,
+          windowWidth: w,
+          windowHeight: h,
         });
         const a = document.createElement('a');
         a.download = filename;
-        a.href = dataUrl;
+        a.href = canvas.toDataURL('image/png');
         a.click();
       } finally {
-        el.style.transform = '';
+        document.body.removeChild(el);
       }
     }
 
